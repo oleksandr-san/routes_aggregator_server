@@ -1,0 +1,330 @@
+---
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "Route Aggregator API"
+host: "localhost"
+basePath: "/v1"
+schemes:
+- "https"
+produces:
+- "application/json"
+paths:
+  /get_station:
+    get:
+      tags:
+      - "Station"
+      summary: "Get station by identifier."
+      operationId: "get_station_get"
+      parameters:
+      - name: "station_id"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "language"
+        in: "query"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Station"
+          schema:
+            $ref: "#/definitions/Station"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "swagger_server.controllers.station_controller"
+  /get_route:
+    get:
+      tags:
+      - "Route"
+      summary: "Get route by identifier."
+      operationId: "get_route_get"
+      parameters:
+      - name: "route_id"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "language"
+        in: "query"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Route"
+          schema:
+            $ref: "#/definitions/Route"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "swagger_server.controllers.route_controller"
+  /find_stations:
+    get:
+      tags:
+      - "Station"
+      summary: "Find stations by name."
+      operationId: "find_stations_get"
+      parameters:
+      - name: "station_name"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "language"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "search_mode"
+        in: "query"
+        required: false
+        type: "string"
+        default: "starts_with"
+        enum:
+        - "strict"
+        - "starts_with"
+        - "regex"
+      - name: "limit"
+        in: "query"
+        required: false
+        type: "integer"
+        default: 16
+      responses:
+        200:
+          description: "Stations"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Station"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "swagger_server.controllers.station_controller"
+  /find_routes:
+    get:
+      tags:
+      - "Route"
+      summary: "Find routes by number or by station identifiers."
+      operationId: "find_routes_get"
+      parameters:
+      - name: "route_number"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "station_ids"
+        in: "query"
+        required: false
+        type: "array"
+        items:
+          type: "string"
+        collectionFormat: "multi"
+      - name: "language"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "search_mode"
+        in: "query"
+        required: false
+        type: "string"
+        default: "starts_with"
+        enum:
+        - "strict"
+        - "starts_with"
+        - "regex"
+      - name: "limit"
+        in: "query"
+        required: false
+        type: "integer"
+        default: 16
+      responses:
+        200:
+          description: "Routes"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Route"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "swagger_server.controllers.route_controller"
+  /find_paths:
+    get:
+      tags:
+      - "Path"
+      summary: "Find paths between stations."
+      operationId: "find_paths_get"
+      parameters:
+      - name: "departure_station_ids"
+        in: "query"
+        required: true
+        type: "array"
+        items:
+          type: "string"
+        collectionFormat: "multi"
+      - name: "arrival_station_ids"
+        in: "query"
+        required: true
+        type: "array"
+        items:
+          type: "string"
+        collectionFormat: "multi"
+      - name: "search_mode"
+        in: "query"
+        required: false
+        type: "string"
+        default: "regular"
+        enum:
+        - "regular"
+        - "shortest_path"
+      - name: "transfers_count"
+        in: "query"
+        required: false
+        type: "integer"
+        default: 0
+        format: "int32"
+      - name: "max_transitions_count"
+        in: "query"
+        required: false
+        type: "integer"
+        default: 4
+        format: "int32"
+      - name: "limit"
+        in: "query"
+        required: false
+        type: "integer"
+        default: 16
+        format: "int32"
+      responses:
+        200:
+          description: "Paths"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Path"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "swagger_server.controllers.path_controller"
+  /request_model_update:
+    get:
+      tags:
+      - "Model"
+      summary: "Request model update."
+      operationId: "request_model_update_get"
+      parameters:
+      - name: "agent_type"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "build_model"
+        in: "query"
+        required: false
+        type: "boolean"
+        default: false
+      responses:
+        200:
+          description: "Result"
+          schema:
+            type: "string"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "swagger_server.controllers.model_controller"
+definitions:
+  Station:
+    type: "object"
+    properties:
+      station_id:
+        type: "string"
+      agent_type:
+        type: "string"
+      station_name:
+        type: "string"
+      country_name:
+        type: "string"
+  Route:
+    type: "object"
+    properties:
+      route_id:
+        type: "string"
+      agent_type:
+        type: "string"
+      route_number:
+        type: "string"
+      departure_station_id:
+        type: "string"
+      arrival_station_id:
+        type: "string"
+      departure_time:
+        type: "string"
+      arrival_time:
+        type: "string"
+      travel_time:
+        type: "string"
+      periodicity:
+        type: "string"
+      route_points:
+        type: "array"
+        items:
+          $ref: "#/definitions/RoutePoint"
+  RoutePoint:
+    type: "object"
+    properties:
+      route_id:
+        type: "string"
+      station_id:
+        type: "string"
+      arrival_time:
+        type: "string"
+      departure_time:
+        type: "string"
+      stop_time:
+        type: "string"
+  Path:
+    type: "object"
+    properties:
+      departure_station_id:
+        type: "string"
+      arrival_station_id:
+        type: "string"
+      departure_time:
+        type: "string"
+      arrival_time:
+        type: "string"
+      travel_time:
+        type: "string"
+      path_items:
+        type: "array"
+        items:
+          $ref: "#/definitions/PathItem"
+  PathItem:
+    type: "object"
+    properties:
+      route_id:
+        type: "string"
+      departure_point_idx:
+        type: "integer"
+        format: "int32"
+      arrival_point_idx:
+        type: "integer"
+        format: "int32"
+      departure_time:
+        type: "string"
+      arrival_time:
+        type: "string"
+      travel_time:
+        type: "string"
+  Error:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"
+      fields:
+        type: "string"
