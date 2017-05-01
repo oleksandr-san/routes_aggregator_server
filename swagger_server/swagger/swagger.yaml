@@ -157,14 +157,14 @@ paths:
       operationId: "find_paths_get"
       parameters:
       - name: "station_ids"
-        in: "query"
+        in: "header"
         required: true
         type: "array"
         items:
           type: "array"
           items:
             type: "string"
-        collectionFormat: "multi"
+        collectionFormat: "csv"
       - name: "search_mode"
         in: "query"
         required: false
