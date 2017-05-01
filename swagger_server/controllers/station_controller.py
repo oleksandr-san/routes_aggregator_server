@@ -7,16 +7,17 @@ from six import iteritems
 from ..util import deserialize_date, deserialize_datetime
 
 from routes_aggregator.service import Service
+from routes_aggregator.model import Entity
 from routes_aggregator.exceptions import ApplicationException
 
 
 def convert_station(model_station, language):
     if model_station:
         return Station(
-            model_station.domain_id,
-            model_station.agent_type,
-            model_station.get_station_name(language),
-            model_station.get_country_name(language)
+            station_id=model_station.domain_id,
+            agent_type=model_station.agent_type,
+            station_name=Entity.extract_property(model_station.get_station_name, language),
+            country_name=Entity.extract_property(model_station.get_country_name, language)
         )
     else:
         return None

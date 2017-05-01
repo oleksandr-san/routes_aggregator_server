@@ -156,19 +156,14 @@ paths:
       summary: "Find paths between stations."
       operationId: "find_paths_get"
       parameters:
-      - name: "departure_station_ids"
+      - name: "station_ids"
         in: "query"
         required: true
         type: "array"
         items:
-          type: "string"
-        collectionFormat: "multi"
-      - name: "arrival_station_ids"
-        in: "query"
-        required: true
-        type: "array"
-        items:
-          type: "string"
+          type: "array"
+          items:
+            type: "string"
         collectionFormat: "multi"
       - name: "search_mode"
         in: "query"
@@ -177,13 +172,12 @@ paths:
         default: "regular"
         enum:
         - "regular"
-        - "shortest_path"
-      - name: "transfers_count"
+        - "transitions"
+      - name: "use_strict_intermediate_stations"
         in: "query"
         required: false
-        type: "integer"
-        default: 0
-        format: "int32"
+        type: "boolean"
+        default: false
       - name: "max_transitions_count"
         in: "query"
         required: false
@@ -297,6 +291,9 @@ definitions:
         type: "string"
       travel_time:
         type: "string"
+      raw_travel_time:
+        type: "integer"
+        format: "int32"
       path_items:
         type: "array"
         items:

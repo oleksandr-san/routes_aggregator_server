@@ -30,6 +30,7 @@ def convert_path(model_path):
             departure_time=model_path.departure_time,
             arrival_time=model_path.arrival_time,
             travel_time=model_path.travel_time,
+            raw_travel_time=model_path.row_travel_time,
             path_items=list(
                 map(convert_path_item, model_path.path_items)
             )
@@ -38,18 +39,18 @@ def convert_path(model_path):
         return None
 
 
-def find_paths_get(departure_station_ids, arrival_station_ids, search_mode=None, transfers_count=None, max_transitions_count=None, limit=None):
+def find_paths_get(station_ids, search_mode=None,
+                   use_strict_intermediate_stations=None,
+                   max_transitions_count=None, limit=None):
     """
     Find paths between stations.
-    
-    :param departure_station_ids: 
-    :type departure_station_ids: List[str]
-    :param arrival_station_ids: 
-    :type arrival_station_ids: List[str]
+
+    :param station_ids: 
+    :type station_ids: List[]
     :param search_mode: 
     :type search_mode: str
-    :param transfers_count: 
-    :type transfers_count: int
+    :param use_strict_intermediate_stations: 
+    :type use_strict_intermediate_stations: bool
     :param max_transitions_count: 
     :type max_transitions_count: int
     :param limit: 
@@ -60,8 +61,8 @@ def find_paths_get(departure_station_ids, arrival_station_ids, search_mode=None,
 
     try:
         model_paths = Service().find_paths(
-            departure_station_ids, arrival_station_ids,
-            search_mode=search_mode, transfers_count=transfers_count,
+            station_ids=station_ids, search_mode=search_mode,
+            use_strict_intermediate_stations=use_strict_intermediate_stations,
             max_transitions_count=max_transitions_count, limit=limit
         )
 

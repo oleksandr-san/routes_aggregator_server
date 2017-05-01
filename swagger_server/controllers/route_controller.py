@@ -9,7 +9,7 @@ from ..util import deserialize_date, deserialize_datetime
 
 from routes_aggregator.service import Service
 from routes_aggregator.exceptions import ApplicationException
-from routes_aggregator.model import Route as ModelRoute, Station as ModelStation
+from routes_aggregator.model import Route as ModelRoute, Station as ModelStation, Entity
 
 
 def convert_route_point(model_point, agent_type):
@@ -33,7 +33,7 @@ def convert_route(model_route, language):
             arrival_station_id=model_route.arrival_point.station_id,
             arrival_time=model_route.arrival_time,
             travel_time=model_route.travel_time,
-            periodicity=model_route.get_periodicity(language),
+            periodicity=Entity.extract_property(model_route.get_periodicity, language),
             route_points=list(
                 map(
                     lambda model_point: convert_route_point(

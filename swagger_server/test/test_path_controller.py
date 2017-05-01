@@ -18,10 +18,9 @@ class TestPathController(BaseTestCase):
 
         Find paths between stations.
         """
-        query_string = [('departure_station_ids', 'departure_station_ids_example'),
-                        ('arrival_station_ids', 'arrival_station_ids_example'),
+        query_string = [('station_ids', List[str]()),
                         ('search_mode', 'regular'),
-                        ('transfers_count', 0),
+                        ('use_strict_intermediate_stations', false),
                         ('max_transitions_count', 4),
                         ('limit', 16)]
         response = self.client.open('/v1/find_paths',
