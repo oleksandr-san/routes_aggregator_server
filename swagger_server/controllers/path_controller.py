@@ -9,6 +9,7 @@ from ..util import deserialize_date, deserialize_datetime
 
 from routes_aggregator.service import Service
 from routes_aggregator.exceptions import ApplicationException
+from routes_aggregator.utils import convert_array
 
 
 def convert_path_item(model_item):
@@ -61,7 +62,7 @@ def find_paths_get(station_ids, search_mode=None,
 
     try:
         model_paths = Service().find_paths(
-            station_ids=station_ids, search_mode=search_mode,
+            station_ids=convert_array(station_ids), search_mode=search_mode,
             use_strict_intermediate_stations=use_strict_intermediate_stations,
             max_transitions_count=max_transitions_count, limit=limit
         )

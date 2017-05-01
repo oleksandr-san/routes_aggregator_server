@@ -18,14 +18,13 @@ class TestPathController(BaseTestCase):
 
         Find paths between stations.
         """
-        query_string = [('search_mode', 'regular'),
+        query_string = [('station_ids', 'station_ids_example'),
+                        ('search_mode', 'regular'),
                         ('use_strict_intermediate_stations', false),
                         ('max_transitions_count', 4),
                         ('limit', 16)]
-        headers = [('station_ids', List[str]())]
         response = self.client.open('/v1/find_paths',
                                     method='GET',
-                                    headers=headers,
                                     query_string=query_string)
         self.assert200(response, "Response body is : " + response.data.decode('utf-8'))
 
