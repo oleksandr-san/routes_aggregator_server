@@ -9,7 +9,18 @@ from ..util import deserialize_date, deserialize_datetime
 
 from routes_aggregator.service import Service
 from routes_aggregator.exceptions import ApplicationException
-from routes_aggregator.utils import convert_array
+
+
+def convert_array(array):
+    result = []
+    for item in array:
+        if item == -1:
+            result.append([])
+        else:
+            if not result:
+                result.append([])
+            result[-1].append(item)
+    return result
 
 
 def convert_path_item(model_item):
