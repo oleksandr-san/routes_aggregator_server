@@ -42,7 +42,7 @@ def convert_path(model_path):
             departure_time=model_path.departure_time,
             arrival_time=model_path.arrival_time,
             travel_time=model_path.travel_time,
-            raw_travel_time=model_path.row_travel_time,
+            raw_travel_time=model_path.raw_travel_time,
             path_items=list(
                 map(convert_path_item, model_path.path_items)
             )
