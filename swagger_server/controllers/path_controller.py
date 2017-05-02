@@ -14,7 +14,7 @@ from routes_aggregator.exceptions import ApplicationException
 def convert_array(array):
     result = []
     for item in array:
-        if item == -1:
+        if item == -1 or item == '-1':
             result.append([])
         else:
             if not result:
