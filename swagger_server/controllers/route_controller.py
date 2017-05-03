@@ -47,14 +47,14 @@ def convert_route(model_route, language):
         return None
 
 
-def find_routes_get(language, route_number=None, station_ids=None, search_mode=None, limit=None):
+def find_routes_get(language, route_numbers=None, station_ids=None, search_mode=None, limit=None):
     """
     Find routes by number or by station identifiers.
-    
+
     :param language: 
     :type language: str
-    :param route_number: 
-    :type route_number: str
+    :param route_numbers: 
+    :type route_numbers: List[str]
     :param station_ids: 
     :type station_ids: List[str]
     :param search_mode: 
@@ -67,7 +67,9 @@ def find_routes_get(language, route_number=None, station_ids=None, search_mode=N
 
     try:
         model_routes = Service().find_routes(
-            language, route_number, station_ids, search_mode, limit
+            language=language, route_numbers=route_numbers,
+            station_ids=station_ids, search_mode=search_mode,
+            limit=limit
         )
         return list(
             map(

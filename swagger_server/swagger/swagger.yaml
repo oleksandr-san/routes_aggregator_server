@@ -67,10 +67,13 @@ paths:
       summary: "Find stations by name."
       operationId: "find_stations_get"
       parameters:
-      - name: "station_name"
+      - name: "station_names"
         in: "query"
         required: true
-        type: "string"
+        type: "array"
+        items:
+          type: "string"
+        collectionFormat: "multi"
       - name: "language"
         in: "query"
         required: true
@@ -108,10 +111,13 @@ paths:
       summary: "Find routes by number or by station identifiers."
       operationId: "find_routes_get"
       parameters:
-      - name: "route_number"
+      - name: "route_numbers"
         in: "query"
         required: false
-        type: "string"
+        type: "array"
+        items:
+          type: "string"
+        collectionFormat: "multi"
       - name: "station_ids"
         in: "query"
         required: false
@@ -167,15 +173,10 @@ paths:
         in: "query"
         required: false
         type: "string"
-        default: "regular"
+        default: "simple"
         enum:
-        - "regular"
+        - "simple"
         - "transitions"
-      - name: "use_strict_intermediate_stations"
-        in: "query"
-        required: false
-        type: "boolean"
-        default: false
       - name: "max_transitions_count"
         in: "query"
         required: false

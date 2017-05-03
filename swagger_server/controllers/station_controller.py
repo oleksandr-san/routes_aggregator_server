@@ -23,12 +23,12 @@ def convert_station(model_station, language):
         return None
 
 
-def find_stations_get(station_name, language, search_mode=None, limit=None):
+def find_stations_get(station_names, language, search_mode=None, limit=None):
     """
     Find stations by name.
-    
-    :param station_name: 
-    :type station_name: str
+
+    :param station_names: 
+    :type station_names: List[str]
     :param language: 
     :type language: str
     :param search_mode: 
@@ -41,7 +41,8 @@ def find_stations_get(station_name, language, search_mode=None, limit=None):
 
     try:
         model_stations = Service().find_stations(
-            station_name, language, search_mode, limit
+            station_names=station_names, language=language,
+            search_mode=search_mode, limit=limit
         )
 
         return list(

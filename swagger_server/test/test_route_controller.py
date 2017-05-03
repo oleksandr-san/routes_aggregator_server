@@ -18,7 +18,7 @@ class TestRouteController(BaseTestCase):
 
         Find routes by number or by station identifiers.
         """
-        query_string = [('route_number', 'route_number_example'),
+        query_string = [('route_numbers', 'route_numbers_example'),
                         ('station_ids', 'station_ids_example'),
                         ('language', 'language_example'),
                         ('search_mode', 'starts_with'),

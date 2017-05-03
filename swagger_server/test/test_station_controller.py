@@ -18,7 +18,7 @@ class TestStationController(BaseTestCase):
 
         Find stations by name.
         """
-        query_string = [('station_name', 'station_name_example'),
+        query_string = [('station_names', 'station_names_example'),
                         ('language', 'language_example'),
                         ('search_mode', 'starts_with'),
                         ('limit', 16)]
