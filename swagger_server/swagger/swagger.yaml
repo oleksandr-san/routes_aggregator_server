@@ -74,10 +74,6 @@ paths:
         items:
           type: "string"
         collectionFormat: "multi"
-      - name: "language"
-        in: "query"
-        required: true
-        type: "string"
       - name: "search_mode"
         in: "query"
         required: false
@@ -87,6 +83,10 @@ paths:
         - "strict"
         - "starts_with"
         - "regex"
+      - name: "language"
+        in: "query"
+        required: true
+        type: "string"
       - name: "limit"
         in: "query"
         required: false
@@ -125,10 +125,6 @@ paths:
         items:
           type: "string"
         collectionFormat: "multi"
-      - name: "language"
-        in: "query"
-        required: true
-        type: "string"
       - name: "search_mode"
         in: "query"
         required: false
@@ -138,6 +134,15 @@ paths:
         - "strict"
         - "starts_with"
         - "regex"
+      - name: "collect_points"
+        in: "query"
+        required: false
+        type: "boolean"
+        default: false
+      - name: "language"
+        in: "query"
+        required: true
+        type: "string"
       - name: "limit"
         in: "query"
         required: false
@@ -183,6 +188,10 @@ paths:
         type: "integer"
         default: 4
         format: "int32"
+      - name: "language"
+        in: "query"
+        required: true
+        type: "string"
       - name: "limit"
         in: "query"
         required: false
@@ -231,7 +240,7 @@ definitions:
   Station:
     type: "object"
     properties:
-      station_id:
+      id:
         type: "string"
       agent_type:
         type: "string"
@@ -242,18 +251,18 @@ definitions:
   Route:
     type: "object"
     properties:
-      route_id:
+      id:
         type: "string"
       agent_type:
         type: "string"
       route_number:
         type: "string"
-      departure_station_id:
-        type: "string"
-      arrival_station_id:
-        type: "string"
+      departure_station:
+        $ref: "#/definitions/Station"
       departure_time:
         type: "string"
+      arrival_station:
+        $ref: "#/definitions/Station"
       arrival_time:
         type: "string"
       travel_time:
@@ -267,10 +276,8 @@ definitions:
   RoutePoint:
     type: "object"
     properties:
-      route_id:
-        type: "string"
-      station_id:
-        type: "string"
+      station:
+        $ref: "#/definitions/Station"
       arrival_time:
         type: "string"
       departure_time:
@@ -280,19 +287,16 @@ definitions:
   Path:
     type: "object"
     properties:
-      departure_station_id:
-        type: "string"
-      arrival_station_id:
-        type: "string"
+      departure_station:
+        $ref: "#/definitions/Station"
       departure_time:
         type: "string"
+      arrival_station:
+        $ref: "#/definitions/Station"
       arrival_time:
         type: "string"
       travel_time:
         type: "string"
-      raw_travel_time:
-        type: "integer"
-        format: "int32"
       path_items:
         type: "array"
         items:
@@ -300,20 +304,24 @@ definitions:
   PathItem:
     type: "object"
     properties:
-      route_id:
+      route_number:
         type: "string"
-      departure_point_idx:
-        type: "integer"
-        format: "int32"
-      arrival_point_idx:
-        type: "integer"
-        format: "int32"
+      departure_station:
+        $ref: "#/definitions/Station"
       departure_time:
         type: "string"
+      arrival_station:
+        $ref: "#/definitions/Station"
       arrival_time:
         type: "string"
       travel_time:
         type: "string"
+      periodicity:
+        type: "string"
+      route_points:
+        type: "array"
+        items:
+          $ref: "#/definitions/RoutePoint"
   Error:
     type: "object"
     properties:

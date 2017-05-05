@@ -21,6 +21,7 @@ class TestPathController(BaseTestCase):
         query_string = [('station_ids', 'station_ids_example'),
                         ('search_mode', 'simple'),
                         ('max_transitions_count', 4),
+                        ('language', 'language_example'),
                         ('limit', 16)]
         response = self.client.open('/v1/find_paths',
                                     method='GET',

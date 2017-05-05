@@ -6,21 +6,7 @@ from typing import List, Dict
 from six import iteritems
 from ..util import deserialize_date, deserialize_datetime
 
-from routes_aggregator.service import Service
-from routes_aggregator.model import Entity
-from routes_aggregator.exceptions import ApplicationException
-
-
-def convert_station(model_station, language):
-    if model_station:
-        return Station(
-            station_id=model_station.domain_id,
-            agent_type=model_station.agent_type,
-            station_name=Entity.extract_property(model_station.get_station_name, language),
-            country_name=Entity.extract_property(model_station.get_country_name, language)
-        )
-    else:
-        return None
+import swagger_server.controllers.basic_controller as controller
 
 
 def find_stations_get(station_names, language, search_mode=None, limit=None):
@@ -39,20 +25,7 @@ def find_stations_get(station_names, language, search_mode=None, limit=None):
     :rtype: List[Station]
     """
 
-    try:
-        model_stations = Service().find_stations(
-            station_names=station_names, language=language,
-            search_mode=search_mode, limit=limit
-        )
-
-        return list(
-            map(
-                lambda model_station: convert_station(model_station, language),
-                model_stations
-            )
-        )
-    except ApplicationException as e:
-        return Error(0, str(e))
+    return controller.find_stations_get(station_names, language, search_mode, limit)
 
 
 def get_station_get(station_id, language):
@@ -67,9 +40,4 @@ def get_station_get(station_id, language):
     :rtype: Station
     """
 
-    try:
-        return convert_station(
-            Service().get_station(station_id, language), language
-        )
-    except ApplicationException as e:
-        return Error(0, str(e))
+    return controller.get_station_get(station_id, language)

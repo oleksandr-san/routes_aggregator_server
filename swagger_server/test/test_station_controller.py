@@ -19,8 +19,8 @@ class TestStationController(BaseTestCase):
         Find stations by name.
         """
         query_string = [('station_names', 'station_names_example'),
-                        ('language', 'language_example'),
                         ('search_mode', 'starts_with'),
+                        ('language', 'language_example'),
                         ('limit', 16)]
         response = self.client.open('/v1/find_stations',
                                     method='GET',

@@ -20,8 +20,9 @@ class TestRouteController(BaseTestCase):
         """
         query_string = [('route_numbers', 'route_numbers_example'),
                         ('station_ids', 'station_ids_example'),
-                        ('language', 'language_example'),
                         ('search_mode', 'starts_with'),
+                        ('collect_points', false),
+                        ('language', 'language_example'),
                         ('limit', 16)]
         response = self.client.open('/v1/find_routes',
                                     method='GET',
