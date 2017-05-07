@@ -101,8 +101,10 @@ def convert_path_item(model_item, language):
     if not model_item:
         return None
 
-    departure_station_id = model_item.departure_point.station_id
-    arrival_station_id = model_item.arrival_point.station_id
+    departure_station_id = ModelStation.get_domain_id(
+        model_item.route.agent_type, model_item.departure_point.station_id)
+    arrival_station_id = ModelStation.get_domain_id(
+        model_item.route.agent_type, model_item.arrival_point.station_id)
 
     route_points = list(
         map(
@@ -130,8 +132,12 @@ def convert_path(model_path, language):
     if not model_path:
         return None
 
-    departure_station_id = model_path.departure_station_id
-    arrival_station_id = model_path.arrival_station_id
+    departure_station_id = ModelStation.get_domain_id(
+        model_path.path_items[0].route.agent_type,
+        model_path.departure_point.station_id)
+    arrival_station_id = ModelStation.get_domain_id(
+        model_path.path_items[-1].route.agent_type,
+        model_path.arrival_point.station_id)
 
     path_items = list(
         map(
