@@ -304,6 +304,8 @@ definitions:
   PathItem:
     type: "object"
     properties:
+      agent_type:
+        type: "string"
       route_number:
         type: "string"
       departure_station:
