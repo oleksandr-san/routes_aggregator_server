@@ -181,6 +181,7 @@ paths:
         default: "simple"
         enum:
         - "simple"
+        - "transfers"
         - "transitions"
       - name: "max_transitions_count"
         in: "query"
