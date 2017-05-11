@@ -118,8 +118,7 @@ def convert_path_item(model_item, language):
     )
 
     return PathItem(
-        agent_type=model_item.route.agent_type,
-        route_number=model_item.route.route_number,
+        route=convert_route(model_item.route, language, False),
         departure_station=convert_station(service.get_station(departure_station_id), language),
         departure_time=model_item.departure_time,
         arrival_station=convert_station(service.get_station(arrival_station_id), language),

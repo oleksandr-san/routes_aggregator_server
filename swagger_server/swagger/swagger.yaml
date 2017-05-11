@@ -305,10 +305,8 @@ definitions:
   PathItem:
     type: "object"
     properties:
-      agent_type:
-        type: "string"
-      route_number:
-        type: "string"
+      route:
+        $ref: "#/definitions/Route"
       departure_station:
         $ref: "#/definitions/Station"
       departure_time:
@@ -318,8 +316,6 @@ definitions:
       arrival_time:
         type: "string"
       travel_time:
-        type: "string"
-      periodicity:
         type: "string"
       route_points:
         type: "array"
