@@ -93,6 +93,8 @@ def convert_route(model_route, language, collect_points):
         arrival_time=model_route.arrival_time,
         travel_time=model_route.travel_time,
         periodicity=ModelEntity.extract_property(model_route.get_periodicity, language),
+        activity_period_start=model_route.active_from_date,
+        activity_period_end=model_route.active_to_date,
         route_points=route_points
     )
 

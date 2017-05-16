@@ -270,6 +270,10 @@ definitions:
         type: "string"
       periodicity:
         type: "string"
+      activity_period_start:
+        type: "string"
+      activity_period_end:
+        type: "string"
       route_points:
         type: "array"
         items:
